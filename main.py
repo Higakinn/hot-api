@@ -4,7 +4,6 @@ import secrets
 import requests
 import os
 app = FastAPI(title="api一覧")
-
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
@@ -21,6 +20,7 @@ def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
             headers={"WWW-Authenticate": "Basic"},
         )
     return credentials.username
+
 origins = [
     "http://localhost.tiangolo.com",
     "https://localhost.tiangolo.com",
@@ -60,7 +60,7 @@ def use_hotpepper_gourmet_search_api(
         description="検索結果の並び順を指定します。おススメ順は定期的に更新されます。※ 位置検索の場合、「4:オススメ順」以外は指定に関係なく、強制的に距離順でソートされます。"
     ),
     genre: Optional[str] = Query (
-        "G001",
+        None,
         description = "お店のジャンル(サブジャンル含む)で絞込むことができます。指定できるコードについてはgenre_master API参照"
     )
     
@@ -70,4 +70,24 @@ def use_hotpepper_gourmet_search_api(
     url = f"http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key={os.environ['HOT_PEPPAR_API_KEY']}&lat={lat}&lng={lng}&range={range}&order={order}&genre={genre}&format=json"
     response = requests.get(url)
     # print(response.json())
+    return response.json()
+
+
+@app.get('/genre_master')
+def use_genre_master_api(
+    credentials: HTTPBasicCredentials = Depends(get_current_username),
+    code: Optional[str]= Query(
+        None,
+        description="ジャンルコードで検索(完全一致)します。（２個まで指定可、3個以上指定すると3個目以降無視します"
+    ),
+    keyword: Optional[str]= Query(
+        None,
+        description="ジャンル名で検索(部分一致)します。 UTF8(URLエンコード)で指定"
+    )
+    ):
+        # keyword = base64.encode(keyword)
+    params = {"code": code,"keyword": keyword,"format":"json"}
+    url = f"http://webservice.recruit.co.jp/hotpepper/genre/v1/?key={os.environ['HOT_PEPPAR_API_KEY']}"
+    response = requests.get(url,params)
+
     return response.json()

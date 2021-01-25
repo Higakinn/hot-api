@@ -61,7 +61,7 @@ def use_hotpepper_gourmet_search_api(
     ),
     genre: Optional[str] = Query (
         "G001",
-        description = "お店のジャンル(サブジャンル含む)で絞込むことができます。指定できるコードについてはジャンルマスタAPI参照"
+        description = "お店のジャンル(サブジャンル含む)で絞込むことができます。指定できるコードについてはgenre_master API参照"
     )
     
     ):

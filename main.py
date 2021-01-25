@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Query,Depends, HTTPException, status
+from typing import Optional
 import secrets
 import requests
 import os
@@ -11,8 +12,8 @@ from fastapi.security import HTTPBasic, HTTPBasicCredentials
 security = HTTPBasic()
 
 def get_current_username(credentials: HTTPBasicCredentials = Depends(security)):
-    correct_username = secrets.compare_digest(credentials.username, "stanleyjobson")
-    correct_password = secrets.compare_digest(credentials.password, "swordfish")
+    correct_username = secrets.compare_digest(credentials.username, f"{os.environ['USER']}")
+    correct_password = secrets.compare_digest(credentials.password, f"{os.environ['PASS']}")
     if not (correct_username and correct_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -40,12 +41,12 @@ app.add_middleware(
 def use_hotpepper_gourmet_search_api(
     credentials: HTTPBasicCredentials = Depends(get_current_username),
     lat: float = Query(
-        "0.0",
+        "35.68944",
         title="title",
         description="緯度を入力"
     ),
     lng: float = Query(
-        "0.0",
+        "139.69167",
         title="title",
         description="軽度を入力"
     ),
@@ -58,11 +59,15 @@ def use_hotpepper_gourmet_search_api(
         title="title",
         description="検索結果の並び順を指定します。おススメ順は定期的に更新されます。※ 位置検索の場合、「4:オススメ順」以外は指定に関係なく、強制的に距離順でソートされます。"
     ),
+    genre: Optional[str] = Query (
+        "G001",
+        description = "お店のジャンル(サブジャンル含む)で絞込むことができます。指定できるコードについてはジャンルマスタAPI参照"
+    )
     
     ):
     # 34.67  lat
     # lng=135.52
-    url = f"http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key={os.environ['HOT_PEPPAR_API_KEY']}&lat={lat}&lng={lng}&range={range}&order={order}&format=json"
+    url = f"http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key={os.environ['HOT_PEPPAR_API_KEY']}&lat={lat}&lng={lng}&range={range}&order={order}&genre={genre}&format=json"
     response = requests.get(url)
     # print(response.json())
     return response.json()

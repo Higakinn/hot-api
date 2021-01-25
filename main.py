@@ -67,8 +67,9 @@ def use_hotpepper_gourmet_search_api(
     ):
     # 34.67  lat
     # lng=135.52
-    url = f"http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key={os.environ['HOT_PEPPAR_API_KEY']}&lat={lat}&lng={lng}&range={range}&order={order}&genre={genre}&format=json"
-    response = requests.get(url)
+    params = {"lat":lat,"lng":lng,"range":range,"order":order,"genre":genre}
+    url = f"http://webservice.recruit.co.jp/hotpepper/gourmet/v1/?key={os.environ['HOT_PEPPAR_API_KEY']}&format=json"
+    response = requests.get(url,params)
     # print(response.json())
     return response.json()
 

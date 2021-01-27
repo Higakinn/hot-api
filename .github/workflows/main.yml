@@ -1,0 +1,13 @@
+name: Test CI
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: docker image set up 
+        run: |
+           docker build -t sample .
+           echo "hello world"
+      

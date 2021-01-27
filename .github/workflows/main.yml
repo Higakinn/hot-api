@@ -8,6 +8,7 @@ jobs:
     steps:
       - name: docker image set up 
         run: |
+           ls -al 
            docker build -t sample .
            echo "hello world"
       

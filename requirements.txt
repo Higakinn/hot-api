@@ -3,3 +3,4 @@ fastapi
 gunicorn
 requests
 black
+flake8

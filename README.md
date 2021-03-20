@@ -1,1 +1,7 @@
 # hot-api
+
+
+## lint
+```
+$ black .
+```

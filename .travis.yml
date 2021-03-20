@@ -1,0 +1,22 @@
+sudo: required
+language: python
+services:
+        - docker
+
+before_script:
+        - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin   #login to dockerhub
+        - curl https://cli-assets.heroku.com/install.sh | sh  #install heroku
+        - heroku container:login
+
+script:
+        - docker build -t aabhusan/koora:v1 .
+        - docker tag aabhusan/koora:v1 registry.heroku.com/$HEROKU_APP/web 
+          
+deploy:   
+        provider: script
+        script: 
+               docker push aabhusan/koora:v1;
+               docker push registry.heroku.com/$HEROKU_APP/web;
+               heroku container:release web --app $HEROKU_APP
+        on:
+          branch: aabhusan

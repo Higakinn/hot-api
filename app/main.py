@@ -2,10 +2,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .router import hotpepper
+from .router import restaurant
 
 app = FastAPI(title="api一覧")
 app.include_router(hotpepper.router)
-
+app.include_router(restaurant.router)
 origins = [
     "http://localhost.tiangolo.com",
     "https://localhost.tiangolo.com",

@@ -1,6 +1,7 @@
 from typing import List, Optional
 
 from app.dependencies import get_current_username
+from app.controller.restaurant import Restaurant
 from fastapi import APIRouter, Depends, Query
 
 router = APIRouter(tags=["restaurant"], dependencies=[Depends(get_current_username)])
@@ -12,6 +13,7 @@ async def add_favorite_restaurant(
         None, description="登録したいお気に入りのお店を設定"
     )
 ):
+    # Restaurant().add_favorite()
     return {"test": "test"}
 
 

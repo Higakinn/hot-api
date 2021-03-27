@@ -10,7 +10,7 @@ class Restaurant:
         self.firebase.add_db_data_to(
             collection="testCollection",
             document="testDocument",
-            data=favorites
+            data=restaurants
         )
     
     def get_favorite(self, count):

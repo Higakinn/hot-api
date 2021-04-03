@@ -7,11 +7,10 @@ from fastapi import APIRouter, Depends, Query
 from app.model.restaurant import RestaurantGrapheneModel, RestaurantModel, RestaurantGrapheneInputModel
 
 class Query(graphene.ObjectType):
-    say_hello = graphene.String(name=graphene.String(default_value='Test Driven'))
-    favorite_restaurant = graphene.Field(RestaurantGrapheneModel, user_id=graphene.String())
-    @staticmethod
-    def resolve_say_hello(parent, info, name):
-        return f'Hello {name}'
+    favorite_restaurant = graphene.Field(
+        RestaurantGrapheneModel, 
+        user_id = graphene.String(required=True, default_value="testUser", description="ログインユーザIDを指定")
+    )
 
     @staticmethod
     def resolve_favorite_restaurant(parent, info, user_id=None):
@@ -23,7 +22,7 @@ class Query(graphene.ObjectType):
 class AddFavorite(graphene.Mutation):
     class Arguments:
         favorite_details = RestaurantGrapheneInputModel()
-        user_id = graphene.String()
+        user_id = graphene.String(required=True, default_value="testUser", description="ログインユーザIDを指定")
     
     Output = RestaurantGrapheneModel
 
@@ -37,7 +36,7 @@ class AddFavorite(graphene.Mutation):
 class DeleteFavarite(graphene.Mutation):
     class Arguments:
         favorite_details = RestaurantGrapheneInputModel()
-        user_id = graphene.String()
+        user_id = graphene.String(required=True, default_value="testUser", description="ログインユーザIDを指定")
     
     Output = RestaurantGrapheneModel
 

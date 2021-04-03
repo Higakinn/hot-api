@@ -14,7 +14,5 @@ class HotPepper:
 
     def __request_of(self, api_type="genre",params=None):
         self.api_url = self.api_url.replace("__API_TYPE__", api_type)
-        print(self.api_url)
         response = requests.get(self.api_url, params)
-        print(response.url)
         return response.json()

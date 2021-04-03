@@ -4,13 +4,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.graphql import GraphQLApp
 
 from .router import hotpepper
-from .router import restaurant
 from .router.restaurant import Query, Mutation
 
 app = FastAPI(title="api一覧")
 app.add_route('/graphql', GraphQLApp(schema=graphene.Schema(query=Query,mutation=Mutation)))
 app.include_router(hotpepper.router)
-app.include_router(restaurant.router)
+
 origins = [
     "http://localhost.tiangolo.com",
     "https://localhost.tiangolo.com",

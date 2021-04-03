@@ -30,7 +30,6 @@ async def use_gourmet_search_api(
     # 34.67  lat
     # lng=135.52
     params = {"lat": lat, "lng": lng, "range": range, "order": order, "genre": genre}
-    print(params)
     return HotPepper().gourmet(params)
 
 

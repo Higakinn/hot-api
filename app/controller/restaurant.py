@@ -6,7 +6,6 @@ from app.model.restaurant import RestaurantModel
 
 class Restaurant:
     def __init__(self):
-        print("Restaurant init")
         self.firebase = Firebase()
         self.fb_collection = "testCollection"
         self.fb_document = "testDocument"

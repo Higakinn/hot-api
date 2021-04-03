@@ -18,7 +18,7 @@ class Query(graphene.ObjectType):
         if user_id is None:
             raise graphene.FieldError('user_id is empty')
         # Restaurant().get_favorite(2)
-        return Restaurant().get_favorite(2, user_id)
+        return Restaurant().get_favorite(user_id)
 
 class AddFavorite(graphene.Mutation):
     class Arguments:

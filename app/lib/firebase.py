@@ -20,7 +20,7 @@ class Firebase:
         # upsert
         doc_ref.set(data, merge=True)
 
-    def get_db_data(self, collection="",document="",data=""):
+    def get_db_data(self, collection="",document=""):
         doc_ref = self.db.collection(collection).document(document)
         doc = doc_ref.get()
         if doc.exists:

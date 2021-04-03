@@ -19,14 +19,14 @@ class Restaurant:
                 data=self.firebase._array_data_adding_format(k, v)
             )
     
-    def get_favorite(self, count, user_id):
+    def get_favorite(self, user_id):
         # firestoreからデータを取得する
         document = sys._getframe().f_code.co_name.split("_")[1] + self.__class__.__name__
         fav_data = self.firebase.get_db_data(
             collection=user_id,
             document=self.fb_document,
         )
-        return RestaurantModel(ids = list(fav_data.values()))
+        return RestaurantModel(ids = list(fav_data.values())[0])
 
     def delete_favorite(self, restaurants, user_id):
         document = sys._getframe().f_code.co_name.split("_")[1] + self.__class__.__name__

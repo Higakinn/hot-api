@@ -4,3 +4,6 @@ gunicorn
 requests
 black
 flake8
+firebase-admin
+graphene
+graphene-pydantic

@@ -1,7 +1,7 @@
 from typing import Optional
 
 from app.dependencies import get_current_username
-from app.model.hotpepper import HotPepper
+from app.controller.hotpepper import HotPepper
 from fastapi import APIRouter, Depends, Query
 
 router = APIRouter(tags=["hotpepper"], dependencies=[Depends(get_current_username)])

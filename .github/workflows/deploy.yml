@@ -11,7 +11,7 @@ jobs:
         with:
           ref: ${{ github.ref }}
       - name: create firebase service account file
-        run: echo "{{ secrets.FIREBASE_SERVICE_ACCOUNT }}" | base64 -d > ./app/service_account.json
+        run: echo -n "{{ secrets.FIREBASE_SERVICE_ACCOUNT }}" | base64 -d > ./app/service_account.json
       - uses: akhileshns/heroku-deploy@v3.9.9 # This is the action
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}

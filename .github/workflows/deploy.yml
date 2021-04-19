@@ -4,6 +4,7 @@ on: push
 
 jobs:
   build:
+    if: contains( github.ref, 'develop')
     runs-on: ubuntu-latest
     steps:
       - name: git checkout current branch

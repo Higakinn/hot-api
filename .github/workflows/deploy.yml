@@ -6,7 +6,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: git checkout current branch
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
       - name: create firebase service account file
         run: echo "{{ secrets.FIREBASE_SERVICE_ACCOUNT }}" | base64 -d > /app/app/service_account.json
       - uses: akhileshns/heroku-deploy@v3.9.9 # This is the action

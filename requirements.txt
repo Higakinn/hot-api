@@ -7,3 +7,4 @@ flake8
 firebase-admin
 graphene
 graphene-pydantic
+python-multipart

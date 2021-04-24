@@ -1,10 +1,15 @@
 import graphene
+import fastapi
 from typing import List, Optional
 
 from app.dependencies import get_current_username
 from app.controller.restaurant import Restaurant
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Request
 from app.model.restaurant import RestaurantGrapheneModel, RestaurantModel, RestaurantGrapheneInputModel
+from fastapi import APIRouter, Depends, Query, Form
+from starlette.graphql import GraphQLApp
+from app.dependencies import get_current_username
+
 
 class Query(graphene.ObjectType):
     favorite_restaurant = graphene.Field(
@@ -53,3 +58,10 @@ class DeleteFavarite(graphene.Mutation):
 class Mutation(graphene.ObjectType):
     add_favorite = AddFavorite.Field()
     delete_favorite = DeleteFavarite.Field()
+
+router = APIRouter(tags=["favorite"], dependencies=[Depends(get_current_username)])
+graphql_app = GraphQLApp(schema=graphene.Schema(query=Query,mutation=Mutation))
+
+@router.api_route("/gql", methods=["GET", "POST"])
+async def graphql(request: Request,query=fastapi.Query(...)):
+    return await graphql_app.handle_graphql(request=request)

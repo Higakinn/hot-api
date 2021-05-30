@@ -26,10 +26,13 @@ async def use_gourmet_search_api(
     genre: Optional[str] = Query(
         None, description="お店のジャンル(サブジャンル含む)で絞込むことができます。指定できるコードについてはgenre_master API参照"
     ),
+    restraurant_id: Optional[str] = Query(
+        None, description="お店に割り当てられた番号で検索します。"
+    )
 ):
     # 34.67  lat
     # lng=135.52
-    params = {"lat": lat, "lng": lng, "range": range, "order": order, "genre": genre}
+    params = {"lat": lat, "lng": lng, "range": range, "order": order, "genre": genre, "id": restraurant_id}
     return HotPepper().gourmet(params)
 
 

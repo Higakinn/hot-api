@@ -9,9 +9,9 @@ router = APIRouter(tags=["hotpepper"], dependencies=[Depends(get_current_usernam
 
 @router.get("/hgs")
 async def use_gourmet_search_api(
-    lat: float = Query("35.68944", title="title", description="緯度を入力"),
-    lng: float = Query("139.69167", title="title", description="軽度を入力"),
-    range: int = Query(
+    lat: Optional[float] = Query(None, title="title", description="緯度を入力"),
+    lng: Optional[float] = Query(None, title="title", description="軽度を入力"),
+    range: Optional[int] = Query(
         "1",
         description="ある地点からの範囲内のお店の検索を行う場合の範囲を5段階で指定できます。\
                     たとえば300m以内の検索ならrange=1を指定します \
